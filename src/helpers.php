@@ -248,3 +248,44 @@ if (! function_exists('str_float')) {
         return (float) preg_replace('/[^0-9\.\-]/', '', $string);
     }
 }
+
+if (! function_exists('format_period')) {
+    function format_period(DateTime $start, DateTime $end, $time = false)
+    {
+        // Clean up minutes
+        // e.g. 19:00 = 7pm, 19:20 = 7:20pm
+        $startMinuteFormat = $start->format('i') == '00' ? 'ga' : 'g:ia';
+        $endMinuteFormat   = $end->format('i') == '00' ? 'ga' : 'g:ia';
+
+        // Prepare the time formats if set
+        $startTime = $time ? ' ' . $startMinuteFormat : '';
+        $endTime   = $time ? ' ' . $endMinuteFormat : '';
+
+        $formatted = '';
+        $diff = $start->diff($end);
+        $diffHours = $diff->h + ($diff->days * 24);
+
+        // Date spans several days
+        if ($diffHours >= 24) {
+
+            // Date spans several years
+            if ($start->format('Y') != $end->format('Y')) {
+                $formatted = sprintf('%s &ndash; %s', $start->format('jS F Y' . $startTime), $end->format('jS F Y' . $endTime));
+
+            //Date spans several months
+            } elseif ($start->format('n') != $end->format('n')) {
+                $formatted = sprintf('%s &ndash; %s', $start->format('jS F' . $startTime), $end->format('jS F Y' . $endTime));
+
+            // Date spans single month
+            } else {
+                $formatted = sprintf('%s &ndash; %s', $start->format($time ? 'jS F' . $startTime : 'jS'), $end->format('jS F Y' . $endTime));
+            }
+
+        // Date spans a single day
+        } else {
+            $formatted = sprintf('%s &ndash; %s', $start->format('jS F Y ' . $startMinuteFormat), $end->format($endMinuteFormat));
+        }
+
+        return $formatted;
+    }
+}
