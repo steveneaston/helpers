@@ -41,4 +41,21 @@ class HelperTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('1st &ndash; 5th January 2015', format_period($from, $to));
         $this->assertEquals('1st January 12am &ndash; 5th January 2015 12am', format_period($from, $to, true));
     }
+
+    /**
+     * @test
+     */
+    public function it_checks_an_attribute_is_set_and_not_empty()
+    {
+        $data = [
+            'filled' => 'biscuit',
+            'empty'  => '',
+            'null'   => null
+        ];
+
+        $this->assertTrue(set_not_empty($data, 'filled'));
+        $this->assertFalse(set_not_empty($data, 'empty'));
+        $this->assertFalse(set_not_empty($data, 'null'));
+        $this->assertFalse(set_not_empty($data, 'non existant'));
+    }
 }

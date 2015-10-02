@@ -289,3 +289,11 @@ if (! function_exists('format_period')) {
         return $formatted;
     }
 }
+
+if ( ! function_exists('set_not_empty'))
+{
+    function set_not_empty(array $data, $attribute)
+    {
+        return isset($data[$attribute]) && ! empty($data[$attribute]);
+    }
+}
