@@ -58,4 +58,18 @@ class HelperTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse(set_not_empty($data, 'null'));
         $this->assertFalse(set_not_empty($data, 'non existant'));
     }
+
+    /**
+     * @test
+     */
+    public function it_gets_environmental_variables()
+    {
+        $this->assertNull(env('biscuit'));
+        $this->assertEquals('hobnob', env('biscuit', 'hobnob'));
+
+        $this->assertFalse(env('ENV_FALSE'));
+        $this->assertTrue(env('ENV_TRUE'));
+        $this->assertNull(env('ENV_NULL'));
+        $this->assertEquals('', env('ENV_EMPTY'));
+    }
 }

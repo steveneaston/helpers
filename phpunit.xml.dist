@@ -15,4 +15,10 @@
             <directory suffix=".php">./tests</directory>
         </testsuite>
     </testsuites>
+    <php>
+        <env name="ENV_FALSE" value="(false)"/>
+        <env name="ENV_TRUE" value="(true)"/>
+        <env name="ENV_EMPTY" value="(empty)"/>
+        <env name="ENV_NULL" value="(null)"/>
+    </php>
 </phpunit>

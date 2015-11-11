@@ -290,10 +290,50 @@ if (! function_exists('format_period')) {
     }
 }
 
-if ( ! function_exists('set_not_empty'))
-{
+if (! function_exists('set_not_empty')) {
     function set_not_empty(array $data, $attribute)
     {
         return isset($data[$attribute]) && ! empty($data[$attribute]);
+    }
+}
+
+if (! function_exists('env')) {
+    /**
+     * Get an environmental variable.
+     *
+     * Based on Foundation helpers, part of laravel/framework
+     * https://github.com/laravel/framework/
+     *
+     * @param  string $key
+     * @param  mixed $default
+     * @return mixed
+     */
+    function env($key, $default = null)
+    {
+        $value = getenv($key);
+
+        if ($value === false) {
+            return $default;
+        }
+
+        switch (strtolower($value)) {
+            case 'true':
+            case '(true)':
+                return true;
+
+            case 'false':
+            case '(false)':
+                return false;
+
+            case 'empty':
+            case '(empty)':
+                return '';
+
+            case 'null':
+            case '(null)':
+                return;
+        }
+
+        return $value;
     }
 }
