@@ -40,6 +40,10 @@ class HelperTest extends \PHPUnit_Framework_TestCase
         $to   = new DateTime('2015-1-5 00:00:00');
         $this->assertEquals('1st &ndash; 5th January 2015', format_period($from, $to));
         $this->assertEquals('1st January 12am &ndash; 5th January 2015 12am', format_period($from, $to, true));
+
+        $from = new DateTime('2016-02-13 17:33:00.000000');
+        $to   = new DateTime('2016-02-22 04:59:00.000000');
+        $this->assertEquals('13th February 5:33pm &ndash; 22nd February 2016 4:59am', format_period($from, $to, true));
     }
 
     /**
@@ -71,5 +75,20 @@ class HelperTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(env('ENV_TRUE'));
         $this->assertNull(env('ENV_NULL'));
         $this->assertEquals('', env('ENV_EMPTY'));
+    }
+
+    /**
+     * @test
+     */
+    public function it_converts_strings_to_booleans()
+    {
+        $this->assertFalse(str_to_bool('false'));
+        $this->assertFalse(str_to_bool('FALSE'));
+        $this->assertFalse(str_to_bool(false));
+        $this->assertTrue(str_to_bool('true'));
+        $this->assertTrue(str_to_bool('TRUE'));
+        $this->assertTrue(str_to_bool(true));
+
+        $this->assertFalse(str_to_bool(['biscuits']));
     }
 }
