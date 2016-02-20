@@ -348,3 +348,48 @@ if ( ! function_exists('str_to_bool'))
         return strtolower($value) == 'true';
     }
 }
+
+if ( ! function_exists('tax_week'))
+{
+    /**
+     * Return the UK tax week for a given date
+     *
+     * Inland Revenue defines week 1 as 6-12 April inclusive
+     * The day of week has no bearing on week number as
+     * the tax week may start on any day
+     *
+     * @param  DateTime $date
+     * @return int
+     */
+    function tax_week(DateTime $date)
+    {
+        // Reset the time to the start of the given date
+        $date = $date->setTime(0, 0, 0);
+        $dd   = $date->format('d');
+        $mm   = $date->format('m');
+        $yy   = $date->format('Y');
+
+        // Get the given date as a timestamp
+        $now = (int) $date->format('U');
+
+        // The year of the given date
+        $taxYear = (int) $date->format('Y');
+
+        // Get the start of the tax year as a timestamp
+        $start = (int) $date->setDate($taxYear, 4, 6)->format('U');
+
+        if ($start > $now){
+            // If the beginning of the calculated tax year starts
+            // after the given date we are in Jan - Apr so get
+            // the beginning of the previous year
+            $start = (int) $date->setDate($taxYear - 1, 4, 6)->format('U');
+        }
+
+        // Calculate the number of weeks elapsed since week one
+        $elapsed = ($now - $start) / 86400;
+
+        $w  = sprintf("%0.2f", $elapsed / 7);
+        return floor($w) + 1; // ceil breaks boundaries
+    }
+}
+
