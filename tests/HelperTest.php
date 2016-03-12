@@ -103,5 +103,13 @@ class HelperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(2, tax_week(new DateTime('2016-4-17 00:00:00')));
         $this->assertEquals(53, tax_week(new DateTime('2017-4-3 00:00:00')));
         $this->assertEquals(53, tax_week(new DateTime('2017-4-5 00:00:00')));
+
+        // In years where 6th April falls on a Sunday, there are 54 tax weeks
+        $this->assertEquals(1, tax_week(new DateTime('2003-4-6 00:00:00')));
+        $this->assertEquals(54, tax_week(new DateTime('2004-4-5 00:00:00')));
+        $this->assertEquals(1, tax_week(new DateTime('2031-4-6 00:00:00')));
+        $this->assertEquals(54, tax_week(new DateTime('2032-4-5 00:00:00')));
+        $this->assertEquals(1, tax_week(new DateTime('2059-4-6 00:00:00')));
+        $this->assertEquals(54, tax_week(new DateTime('2060-4-5 00:00:00')));
     }
 }
