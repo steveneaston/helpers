@@ -385,11 +385,20 @@ if ( ! function_exists('tax_week'))
             $start = (int) $date->setDate($taxYear - 1, 4, 6)->format('U');
         }
 
+        // If this year's tax week didn't start on a monday
+        // set the start back to the previous monday so
+        // we are able to calculate the exact number
+        // of weeks from the given date
+        if ($date->format('w') != 1) {
+            $date->modify('last monday');
+            $start = (int) $date->format('U');
+        }
+
         // Calculate the number of weeks elapsed since week one
         $elapsed = ($now - $start) / 86400;
 
         $w  = sprintf("%0.2f", $elapsed / 7);
-        return floor($w) + 1; // ceil breaks boundaries
+        return (int) floor($w) + 1; // ceil breaks boundaries
     }
 }
 

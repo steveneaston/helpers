@@ -98,8 +98,10 @@ class HelperTest extends \PHPUnit_Framework_TestCase
     public function it_gets_the_tax_week_from_a_date()
     {
         $this->assertEquals(1, tax_week(new DateTime('2016-4-6 00:00:00')));
-        $this->assertEquals(1, tax_week(new DateTime('2016-4-12 00:00:00')));
-        $this->assertEquals(2, tax_week(new DateTime('2016-4-13 00:00:00')));
-        $this->assertEquals(53, tax_week(new DateTime('2016-4-5 00:00:00')));
+        $this->assertEquals(1, tax_week(new DateTime('2016-4-10 00:00:00')));
+        $this->assertEquals(2, tax_week(new DateTime('2016-4-11 00:00:00')));
+        $this->assertEquals(2, tax_week(new DateTime('2016-4-17 00:00:00')));
+        $this->assertEquals(53, tax_week(new DateTime('2017-4-3 00:00:00')));
+        $this->assertEquals(53, tax_week(new DateTime('2017-4-5 00:00:00')));
     }
 }
