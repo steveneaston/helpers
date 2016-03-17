@@ -84,12 +84,18 @@ class HelperTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertFalse(str_to_bool('false'));
         $this->assertFalse(str_to_bool('FALSE'));
+        $this->assertFalse(str_to_bool('0'));
+        $this->assertFalse(str_to_bool(0));
         $this->assertFalse(str_to_bool(false));
+
         $this->assertTrue(str_to_bool('true'));
         $this->assertTrue(str_to_bool('TRUE'));
+        $this->assertTrue(str_to_bool('1'));
+        $this->assertTrue(str_to_bool(1));
         $this->assertTrue(str_to_bool(true));
 
         $this->assertFalse(str_to_bool(['biscuits']));
+        $this->assertFalse(str_to_bool(null));
     }
 
     /**

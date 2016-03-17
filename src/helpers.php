@@ -343,6 +343,7 @@ if ( ! function_exists('str_to_bool'))
     function str_to_bool($value)
     {
         if (is_bool($value)) return $value;
+        if (is_numeric($value)) return (bool) $value;
         if (! is_string($value)) return false;
 
         return strtolower($value) == 'true';
