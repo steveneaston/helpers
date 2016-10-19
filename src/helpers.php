@@ -69,9 +69,11 @@ if (! function_exists('class_uses_trait')) {
      * @param  string $trait
      * @return boolean
      */
-    function class_uses_trait($class, $trait)
+    function class_uses_trait($class, $trait, $recursive = false)
     {
-        return in_array($trait, class_uses($class, false));
+        return in_array($trait, $recursive
+                                ? class_uses_recursive($class, false)
+                                : class_uses($class, false));
     }
 }
 
