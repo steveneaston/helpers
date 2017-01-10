@@ -44,7 +44,7 @@ if (! function_exists('trim_if_string')) {
             return trim_array($data);
         }
 
-        return trim($data);
+        return is_string($data) ? trim($data) : $data;
     }
 }
 
@@ -53,7 +53,7 @@ if (! function_exists('trim_array')) {
      * Trim each item of an array
      *
      * @param  array  $data
-     * @return [type]       [description]
+     * @return array
      */
     function trim_array(array $data)
     {

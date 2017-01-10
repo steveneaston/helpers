@@ -4,10 +4,7 @@ use Carbon\Carbon;
 
 class HelperTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @test
-     */
-    public function it_formats_a_date_period()
+    public function test_it_formats_a_date_period()
     {
         // Single day
         $from = new DateTime('2015-1-1 00:00:00');
@@ -46,10 +43,7 @@ class HelperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('13th February 5:33pm &ndash; 22nd February 2016 4:59am', format_period($from, $to, true));
     }
 
-    /**
-     * @test
-     */
-    public function it_checks_an_attribute_is_set_and_not_empty()
+    public function test_it_checks_an_attribute_is_set_and_not_empty()
     {
         $data = [
             'filled' => 'biscuit',
@@ -63,10 +57,7 @@ class HelperTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse(set_not_empty($data, 'non existant'));
     }
 
-    /**
-     * @test
-     */
-    public function it_gets_environmental_variables()
+    public function test_it_gets_environmental_variables()
     {
         $this->assertNull(env('biscuit'));
         $this->assertEquals('hobnob', env('biscuit', 'hobnob'));
@@ -77,10 +68,7 @@ class HelperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('', env('ENV_EMPTY'));
     }
 
-    /**
-     * @test
-     */
-    public function it_converts_strings_to_booleans()
+    public function test_it_converts_strings_to_booleans()
     {
         $this->assertFalse(str_to_bool('false'));
         $this->assertFalse(str_to_bool('FALSE'));
@@ -98,10 +86,7 @@ class HelperTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse(str_to_bool(null));
     }
 
-    /**
-     * @test
-     */
-    public function it_gets_the_tax_week_from_a_date()
+    public function test_it_gets_the_tax_week_from_a_date()
     {
         $this->assertEquals(1, tax_week(new DateTime('2016-4-6 00:00:00')));
         $this->assertEquals(1, tax_week(new DateTime('2016-4-10 00:00:00')));
@@ -117,5 +102,17 @@ class HelperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(54, tax_week(new DateTime('2032-4-5 00:00:00')));
         $this->assertEquals(1, tax_week(new DateTime('2059-4-6 00:00:00')));
         $this->assertEquals(54, tax_week(new DateTime('2060-4-5 00:00:00')));
+    }
+
+    public function test_it_trims_strings()
+    {
+        $this->assertSame(null, trim_if_string(null));
+        $this->assertSame('biscuit', trim_if_string(' biscuit '));
+        $this->assertSame(['biscuit', 'hobnob'], trim_if_string([' biscuit ', ' hobnob ']));
+    }
+
+    public function test_it_trims_arrays()
+    {
+        $this->assertSame(['biscuit', 'hobnob'], trim_array([' biscuit ', ' hobnob ']));
     }
 }
