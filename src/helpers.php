@@ -65,7 +65,7 @@ if (! function_exists('class_uses_trait')) {
     /**
      * Check whether or not a class uses a particular trait
      *
-     * @param  class $class
+     * @param  string|object $class
      * @param  string $trait
      * @return boolean
      */
